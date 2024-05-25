@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from utils.chat_templates import templates
+from utils.chat_tools import templates, extract_info
 
 import os
 import replicate
@@ -28,7 +28,7 @@ class ReplicateAPI(AbstractAPI):
             return templates['llama']
         else:
             print("No template found for model, using None")
-            return ""
+            return None
     
     def __init__(self, key, model):
         super().__init__(key, model)
@@ -47,7 +47,8 @@ class ReplicateAPI(AbstractAPI):
             input=input
         )
         
-        return "".join(output)
+        concat_string = "".join(output)
+        return extract_info(concat_string)
             
         
         
