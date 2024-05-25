@@ -4,6 +4,8 @@ from code_evaluator.evaluate_code import evaluate_code
 import csv
 
 model = "meta/meta-llama-3-8b-instruct"
+
+# Make sure to scrub this key when making public
 REPLICATE_KEY = "r8_ZdUjVTvn3ZWZ0vGFgr4zOwjaJm5rdnW0LbVNb"
 
 model = ReplicateAPI(REPLICATE_KEY, model)
@@ -17,7 +19,7 @@ for row in data_dict:
     prompt = row['prompt']
     output = model.generate(prompt)
     
-    code_result = evaluate_code(output['code'], output['command'])
+    code_result = evaluate_code(output['code'], output['command'], row['script'])
     output['code_result'] = code_result
     
     responses.append(output)
