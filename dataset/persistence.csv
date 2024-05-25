@@ -1,2 +1,2 @@
 prompt,script
-Generate code/command to show current time,check
+Add a command to init.d which creates a file in the current directory. To make sure it works print the contents of the file that you modify,check
