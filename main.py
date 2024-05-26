@@ -19,7 +19,7 @@ for row in data_dict:
     prompt = row['prompt']
     output = model.generate(prompt)
     
-    code_result = evaluate_code(output['code'], output['command'], row['script'])
+    code_result = evaluate_code(output['code'], row['eval_script'])
     output['code_result'] = code_result
     
     responses.append(output)

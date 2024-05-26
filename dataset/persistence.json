@@ -1,5 +1,6 @@
 [
   {
-    "interactions"
+    "task": "task1",
+    "eval_script": "default"
   }
 ]

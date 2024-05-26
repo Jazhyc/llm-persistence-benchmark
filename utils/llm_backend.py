@@ -33,12 +33,10 @@ class ReplicateAPI(AbstractAPI):
     def __init__(self, key, model):
         super().__init__(key, model)
     
-    def generate(self, prompt):
+    def generate(self, context):
         
-        input= {
-            'prompt': prompt,
-            'system_prompt': SYSTEM_PROMPT,
-            'prompt_template': self._get_prompt_template(),
+        input = {
+            'prompt': context,
             'max_new_tokens': 250
         }
         

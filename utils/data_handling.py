@@ -6,12 +6,13 @@ class FileHandler:
     def __init__(self, dataset_name):
         self.dataset_name = dataset_name
 
+    # Load data from json
     def load_data(self):
-        with open(f'dataset/{self.dataset_name}.csv', 'r') as file:
-            dict_reader = csv.DictReader(file)
+        with open(f'datasets/{self.dataset_name}.json', 'r') as file:
+            data = json.load(file)
             
-            # Return a dictionary with the data
-            return list(dict_reader)
+        return data
+        
     
     # Convert lists of dicts to json and save to file
     def save_data(self, data):
