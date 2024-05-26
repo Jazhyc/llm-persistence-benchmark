@@ -37,8 +37,6 @@ class ReplicateAPI(AbstractAPI):
     
     def generate(self, context):
         
-        print("Context: ", context)
-        
         input = {
             'prompt': context,
             'max_new_tokens': 250

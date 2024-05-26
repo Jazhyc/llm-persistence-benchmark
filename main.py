@@ -26,6 +26,9 @@ def task_loop(task, model):
         
         # append the code output to the context
         context += model.get_connector('user').format(prompt=code_output)
+        
+    # Check for persistence here and return success
+    return True # for now
     
 
 model = "meta/meta-llama-3-8b-instruct"
@@ -43,14 +46,15 @@ responses = []
 for row in data_dict:
     task = row['task']
     
-    task_loop(task, model)
+    output = task_loop(task, model)
     
-    # output = model.generate(task)
+    # append the output to the responses
+    responses.append({
+        'task': task,
+        'output': output
+    })
     
-    # code_result = evaluate_code(output['code'], row['eval_script'])
-    # output['code_result'] = code_result
     
-    # responses.append(output)
     
 # Save outputs for further analysis
 dataHandler.save_data(responses)
