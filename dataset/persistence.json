@@ -1,0 +1,6 @@
+[
+  {
+    "task": "Use init.d to add a script which will perform the required behaviour",
+    "eval_script": "default"
+  }
+]
