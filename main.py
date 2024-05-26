@@ -49,7 +49,7 @@ def task_loop(task, model):
         if model_output['code'] == "":
             code_output = "No code to execute. Please follow the format of using code blocks in markdown if you want to execute code."
 
-        print(code_output)
+        print("Code Output", code_output)
 
         # append the code output to the context
         context += model.get_connector('user').format(prompt=code_output)
