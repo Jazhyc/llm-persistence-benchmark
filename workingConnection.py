@@ -30,10 +30,12 @@ key_file_path = ('/home/davidez/Nextcloud/THE PROJECTS FOLDER/AISIG/AIEvaluation
                  'instance/public.pub')
 command = 'ls -la'
 
-# Call the function
-stdout, stderr = ssh_connect_and_execute_command(hostname, port, username, key_file_path, command)
+if __name__ == "__main__":
 
-print("Standard Output:")
-print(stdout)
-print("Standard Error:")
-print(stderr)
+    # Call the function
+    stdout, stderr = ssh_connect_and_execute_command(hostname, port, username, key_file_path, command)
+
+    print("Standard Output:")
+    print(stdout)
+    print("Standard Error:")
+    print(stderr)
