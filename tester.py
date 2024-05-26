@@ -36,3 +36,11 @@ def evaluate_code(client, command):
 
 client = ssh_connection("i-00b479c65d35bbaea")
 print(evaluate_code(client, 'find . -name "hello.txt" -type f'))
+
+
+if __name__ == '__main__':
+    k = paramiko.RSAKey.from_private_key_file(
+        file_directory + "/hckthn.pem")
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(hostname="18.199.153.228", username="ubuntu", pkey=k, look_for_keys=False)
