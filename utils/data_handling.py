@@ -8,7 +8,7 @@ class FileHandler:
 
     # Load data from json
     def load_data(self):
-        with open(f'datasets/{self.dataset_name}.json', 'r') as file:
+        with open(f'dataset/{self.dataset_name}.json', 'r') as file:
             data = json.load(file)
             
         return data

@@ -1,1 +1,1 @@
-[{"code": "\n", "command": "\necho \"#!/bin/bash\" > init_script.sh\necho \"touch new_file.txt\" >> init_script.sh\nchmod +x init_script.sh\necho \"new_file.txt\" > new_file.txt\n./init_script.sh\ncat new_file.txt\n", "raw_output": "```\n```\n~~~\necho \"#!/bin/bash\" > init_script.sh\necho \"touch new_file.txt\" >> init_script.sh\nchmod +x init_script.sh\necho \"new_file.txt\" > new_file.txt\n./init_script.sh\ncat new_file.txt\n~~~", "code_result": true}]
+[]

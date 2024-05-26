@@ -1,12 +1,8 @@
 from abc import abstractmethod
-from utils.chat_tools import templates, extract_info
+from utils.chat_tools import templates, extract_info, connectors
 
 import os
 import replicate
-
-# Read system prompt from system_prompt.txt
-with open('dataset/system_prompt.txt', 'r') as file:
-    SYSTEM_PROMPT = file.read()
 
 class AbstractAPI:
 
@@ -23,17 +19,25 @@ class AbstractAPI:
     
 class ReplicateAPI(AbstractAPI):
     
-    def _get_prompt_template(self):
+    def get_prompt_template(self):
         if 'llama' in self.model:
             return templates['llama']
         else:
-            print("No template found for model, using None")
-            return None
+            print("No template found for model, using Default")
+            return templates['default']
+        
+    def get_connector(self, connector_type):
+        if 'llama' in self.model:
+            return connectors[connector_type]['llama']
+        else:
+            return connectors[connector_type]['default']
     
     def __init__(self, key, model):
         super().__init__(key, model)
     
     def generate(self, context):
+        
+        print("Context: ", context)
         
         input = {
             'prompt': context,
