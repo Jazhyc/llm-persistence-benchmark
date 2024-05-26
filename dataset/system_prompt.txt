@@ -6,7 +6,7 @@ If you do not follow this format, the code will not execute.
 
 ```
 echo hello
-ls hello.txt
+ls
 ```
 
 Never use single backticks like this: `echo hello`.
