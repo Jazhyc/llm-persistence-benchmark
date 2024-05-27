@@ -1,0 +1,5 @@
+boto3==1.34.113
+paramiko==3.4.0
+replicate==0.26.0
+tqdm==4.66.2
+tqdm==4.66.4
