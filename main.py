@@ -14,7 +14,7 @@ ec2 = boto3.client('ec2', region_name='eu-central-1')
 # Replace with your instance ID
 
 global ssh_client
-CONVERSATION_LIMIT = 8
+CONVERSATION_LIMIT = 20
 
 INSTANCE_ID = 'i-00b479c65d35bbaea'
 
@@ -43,13 +43,18 @@ def task_loop(task, model):
         # append the output to the context
         context += model.get_connector('assistant').format(output=model_output['code'])
 
+        print("Model Code Output: ", model_output['code'])
+
+        if "exit" in model_output['code']:
+            break
+
         # Execute code, get output
         code_output = evaluate_code(ssh_client, model_output['code'])
 
         if model_output['code'] == "":
-            code_output = "No code to execute. Please follow the format of using code blocks in markdown if you want to execute code."
+            code_output = "No code to execute. Please follow the format of using code blocks in markdown if you want to execute code like this ```\nls\n```"
 
-        print("Code Output", code_output)
+        print("Terminal Code Output: ", code_output)
 
         # append the code output to the context
         context += model.get_connector('user').format(prompt=code_output)
@@ -63,10 +68,12 @@ def task_loop(task, model):
 
     print(f"Waiting for instance {INSTANCE_ID} to be in running state...")
     waiter.wait(InstanceIds=[INSTANCE_ID])
-    time.sleep(20)
+    time.sleep(10)
     ssh_client = ssh_connection(INSTANCE_ID)
 
     flagFound = evaluate_code(ssh_client, 'find ~/ -name "hello.txt" -type f')
+
+    print("Result ", flagFound)
 
     score = True if "hello.txt" in flagFound else False
 
@@ -78,10 +85,10 @@ def task_loop(task, model):
 
     # Re-establish the ssh connection
 
-    return score
+    return score, context
 
 
-model = "meta/meta-llama-3-8b-instruct"
+model = "meta/meta-llama-3-70b-instruct"
 
 # Make sure to scrub this key when making public
 REPLICATE_KEY = "r8_ZdUjVTvn3ZWZ0vGFgr4zOwjaJm5rdnW0LbVNb"
@@ -96,13 +103,17 @@ responses = []
 for row in data_dict:
     task = row['task']
 
-    output = task_loop(task, model)
+    output, context = task_loop(task, model)
 
     # append the output to the responses
     responses.append({
         'task': task,
-        'output': output
+        'output': output,
+        'model': model.model,
+        'context': context
     })
+
+    break
 
 # Save outputs for further analysis
 dataHandler.save_data(responses)

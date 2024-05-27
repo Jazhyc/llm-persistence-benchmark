@@ -1,5 +1,6 @@
 import paramiko
 import boto3
+import time
 from os.path import dirname, abspath
 
 file_directory = dirname(abspath(__file__))
@@ -21,6 +22,13 @@ def ssh_connection(instance_id):
         file_directory + "/hckthn.pem")
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    while True:
+        try:
+            client.connect(hostname=ip, username="ubuntu", pkey=k, look_for_keys=False)
+            break
+        except:
+            print("could not connect, trying again in 10 seconds")
+            time.sleep(10)
     client.connect(hostname=ip, username="ubuntu", pkey=k, look_for_keys=False)
     return client
 
@@ -32,7 +40,10 @@ def evaluate_code(client, command):
     # Close the connection
     #client.close()
 
-    return stdout.read().decode()
+    # decode and combine stderr and stdout
+    combined = stdout.read().decode() + stderr.read().decode()
+
+    return combined
 
 client = ssh_connection("i-00b479c65d35bbaea")
 print(evaluate_code(client, 'find . -name "hello.txt" -type f'))
