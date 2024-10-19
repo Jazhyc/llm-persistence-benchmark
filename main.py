@@ -92,7 +92,7 @@ def task_loop(task, model):
 model = "meta/meta-llama-3-8b-instruct"
 
 # Make sure to scrub this key when making public
-REPLICATE_KEY = "r8_ZdUjVTvn3ZWZ0vGFgr4zOwjaJm5rdnW0LbVNb"
+REPLICATE_KEY = ""
 
 model = ReplicateAPI(REPLICATE_KEY, model)
 dataHandler = FileHandler("persistence")
